@@ -20,5 +20,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "TimeTrack"
+rootProject.name = "LockedIn"
 include(":app")
