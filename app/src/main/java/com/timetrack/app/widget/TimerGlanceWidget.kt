@@ -3,7 +3,6 @@ package com.timetrack.app.widget
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceId
@@ -43,13 +42,7 @@ private val TimerSavingGold = Color(0xFFD4A574)
 
 class TimerGlanceWidget : GlanceAppWidget() {
 
-    override val sizeMode: SizeMode = SizeMode.Responsive(
-        setOf(
-            DpSize(130.dp, 60.dp),   // Small: 2×1 pill
-            DpSize(160.dp, 160.dp),  // Medium: 2×2 square card
-            DpSize(280.dp, 160.dp),  // Large: 4×2
-        )
-    )
+    override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         provideContent {
