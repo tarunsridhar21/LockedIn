@@ -1,0 +1,29 @@
+# Gradle
+.gradle/
+build/
+**/build/
+local.properties
+*.iml
+
+# IDE
+.idea/
+*.iws
+*.ipr
+.DS_Store
+
+# Android
+/app/release/
+/app/debug/
+*.apk
+*.aab
+*.keystore
+*.jks
+
+# Kotlin/Java
+*.class
+
+# Test results
+test-results/
+
+# Generated
+app/src/main/java/com/timetrack/app/BuildConfig.java

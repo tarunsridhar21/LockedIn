@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand colors — used as M3 seed only; composables use theme tokens -->
+    <color name="brand_primary">#3F51B5</color>
+    <color name="brand_secondary">#26A69A</color>
+
+    <!-- Launcher icon background -->
+    <color name="ic_launcher_background">#3F51B5</color>
+</resources>

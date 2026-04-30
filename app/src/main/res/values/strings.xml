@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LockedIn</string>
+
+    <!-- Widget -->
+    <string name="widget_label">TimeTrack Timer</string>
+    <string name="widget_description">Start and stop your timer from the home screen</string>
+
+    <!-- Timer actions -->
+    <string name="action_start_timer">Start Timer</string>
+    <string name="action_stop_timer">Stop Timer</string>
+
+    <!-- Home screen -->
+    <string name="home_title">LockedIn</string>
+    <string name="today_total_label">Today</string>
+    <string name="session_saved_message">Session saved</string>
+    <string name="tap_to_label">Tap to label</string>
+    <string name="timer_running">Timer running</string>
+
+    <!-- History screen -->
+    <string name="history_title">History</string>
+    <string name="unlabeled">Unlabeled</string>
+    <string name="filter_all">All</string>
+    <string name="filter_unlabeled">Unlabeled</string>
+    <string name="history_empty_title">No sessions yet</string>
+    <string name="history_empty_message">Start your first session from the Home tab or widget</string>
+    <string name="delete_session">Delete session</string>
+    <string name="delete_session_confirm">Delete this session?</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+
+    <!-- Label dialog -->
+    <string name="label_title">Label Session</string>
+    <string name="label_save">Save</string>
+    <string name="notes_hint">Notes (optional)</string>
+    <string name="create_category">Create category</string>
+    <string name="category_name_hint">Category name</string>
+    <string name="pick_color">Pick color</string>
+    <string name="pick_icon">Pick icon</string>
+
+    <!-- Stats screen -->
+    <string name="stats_title">Stats</string>
+    <string name="range_today">Today</string>
+    <string name="range_week">Week</string>
+    <string name="range_month">Month</string>
+    <string name="range_all">All</string>
+    <string name="stat_total_time">Total Time</string>
+    <string name="stat_top_category">Top Category</string>
+    <string name="stat_longest_session">Longest Session</string>
+    <string name="stat_session_count">Sessions</string>
+    <string name="time_by_category">Time by Category</string>
+    <string name="daily_trend">Daily Trend</string>
+    <string name="streak_days">day streak</string>
+    <string name="stats_empty">No data for this period</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_system">System</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_dynamic_color">Dynamic Color</string>
+    <string name="settings_dynamic_color_desc">Use wallpaper colors (Android 12+)</string>
+    <string name="settings_categories">Categories</string>
+    <string name="settings_categories_hint">Long-press the handle to drag and reorder</string>
+    <string name="settings_add_category">Add Category</string>
+    <string name="settings_reliability">Reliability</string>
+    <string name="settings_battery_optimization">Battery Optimization</string>
+    <string name="settings_battery_optimization_desc">Whitelist TimeTrack to prevent the timer from being killed</string>
+    <string name="settings_battery_whitelisted">Whitelisted — timer service protected</string>
+    <string name="settings_battery_not_whitelisted">Not whitelisted — timer may be killed</string>
+    <string name="settings_fix">Fix</string>
+    <string name="settings_widget">Widget</string>
+    <string name="settings_widget_category_hint">Quick category auto-labels your next session when started from the widget</string>
+    <string name="settings_widget_no_category">No quick category</string>
+    <string name="settings_widget_refresh_rate">Update Rate</string>
+    <string name="settings_data">Data</string>
+    <string name="settings_export_csv">Export to CSV</string>
+    <string name="settings_about">About</string>
+    <string name="settings_version">Version</string>
+    <string name="settings_github">Source Code</string>
+    <string name="delete_category_title">Delete Category</string>
+    <string name="delete_category_confirm">Delete "%1$s"? Sessions using this category will become unlabeled.</string>
+    <string name="category_name_label">Category name</string>
+    <string name="category_color_label">Color</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_timer">Timer</string>
+    <string name="notification_timer_running">Timer running</string>
+    <string name="notification_action_stop">Stop</string>
+    <string name="notification_auto_saved">Timer auto-saved due to system limit</string>
+
+    <!-- Accessibility -->
+    <string name="cd_start_button">Start timer</string>
+    <string name="cd_stop_button">Stop timer</string>
+    <string name="cd_settings_button">Settings</string>
+    <string name="cd_category_icon">%1$s category</string>
+
+    <!-- Duration formatting -->
+    <string name="duration_hours_minutes">%1$dh %2$dm</string>
+    <string name="duration_minutes">%1$dm</string>
+    <string name="duration_seconds">%1$ds</string>
+</resources>
