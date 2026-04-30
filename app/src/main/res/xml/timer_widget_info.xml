@@ -11,5 +11,6 @@
     android:maxResizeHeight="160dp"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0"
+    android:initialLayout="@layout/widget_loading"
     android:description="@string/widget_description"
     android:widgetCategory="home_screen" />

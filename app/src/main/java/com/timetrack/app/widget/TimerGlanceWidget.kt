@@ -7,7 +7,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
-import androidx.glance.GlanceTheme
 import androidx.glance.LocalSize
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
@@ -26,7 +25,6 @@ import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
 import androidx.glance.layout.size
 import androidx.glance.layout.width
-import androidx.glance.layout.wrapContentSize
 import androidx.glance.text.FontFamily
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
@@ -36,9 +34,14 @@ import com.timetrack.app.data.datastore.TimerStateStore
 import com.timetrack.app.widget.actions.StartTimerAction
 import com.timetrack.app.widget.actions.StopTimerAction
 
-private val TimerIdleSage = Color(0xFF7A9971)
-private val TimerRunningClay = Color(0xFFB5806A)
-private val TimerSavingGold = Color(0xFFD4A574)
+// Static palette — no GlanceTheme/dynamic color needed
+private val BgColor       = ColorProvider(Color(0xFFF5F0EB))
+private val TextColor     = ColorProvider(Color(0xFF2D2D2B))
+private val SubtextColor  = ColorProvider(Color(0xFF6B6B60))
+private val SageGreen     = ColorProvider(Color(0xFF7A9971))
+private val ClayRed       = ColorProvider(Color(0xFFB5806A))
+private val SaveGold      = ColorProvider(Color(0xFFD4A574))
+private val White         = ColorProvider(Color.White)
 
 class TimerGlanceWidget : GlanceAppWidget() {
 
@@ -67,12 +70,10 @@ private fun WidgetContent() {
 
     val size = LocalSize.current
 
-    GlanceTheme {
-        when {
-            size.height >= 160.dp && size.width >= 280.dp -> LargeWidget(isRunning, isSaving, timeText)
-            size.height >= 160.dp -> MediumWidget(isRunning, isSaving, timeText)
-            else -> SmallWidget(isRunning, isSaving, timeText)
-        }
+    when {
+        size.height >= 120.dp && size.width >= 200.dp -> LargeWidget(isRunning, isSaving, timeText)
+        size.height >= 100.dp -> MediumWidget(isRunning, isSaving, timeText)
+        else -> SmallWidget(isRunning, isSaving, timeText)
     }
 }
 
@@ -81,18 +82,18 @@ private fun SmallWidget(isRunning: Boolean, isSaving: Boolean, timeText: String)
     Row(
         modifier = GlanceModifier
             .fillMaxSize()
-            .background(GlanceTheme.colors.surface)
-            .cornerRadius(28)
-            .padding(horizontal = 12.dp, vertical = 8.dp),
+            .background(BgColor)
+            .cornerRadius(24)
+            .padding(horizontal = 10.dp, vertical = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        TimerButton(isRunning, isSaving, size = 40.dp)
+        TimerButton(isRunning, isSaving, size = 36.dp)
         Spacer(GlanceModifier.width(8.dp))
         Text(
             text = if (isSaving) "Saved" else timeText,
             style = TextStyle(
-                color = GlanceTheme.colors.onSurface,
-                fontSize = 16.sp,
+                color = TextColor,
+                fontSize = 15.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Medium,
             ),
@@ -105,30 +106,27 @@ private fun MediumWidget(isRunning: Boolean, isSaving: Boolean, timeText: String
     Column(
         modifier = GlanceModifier
             .fillMaxSize()
-            .background(GlanceTheme.colors.surface)
-            .cornerRadius(28)
+            .background(BgColor)
+            .cornerRadius(24)
             .padding(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        TimerButton(isRunning, isSaving, size = 72.dp)
+        TimerButton(isRunning, isSaving, size = 64.dp)
         Spacer(GlanceModifier.padding(top = 8.dp))
         Text(
             text = if (isSaving) "Saved" else timeText,
             style = TextStyle(
-                color = GlanceTheme.colors.onSurface,
-                fontSize = 20.sp,
+                color = TextColor,
+                fontSize = 18.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Medium,
             ),
         )
-        Spacer(GlanceModifier.padding(top = 4.dp))
+        Spacer(GlanceModifier.padding(top = 2.dp))
         Text(
             text = if (isRunning) "Running" else if (isSaving) "Saving…" else "Tap to start",
-            style = TextStyle(
-                color = GlanceTheme.colors.onSurfaceVariant,
-                fontSize = 12.sp,
-            ),
+            style = TextStyle(color = SubtextColor, fontSize = 11.sp),
         )
     }
 }
@@ -138,56 +136,42 @@ private fun LargeWidget(isRunning: Boolean, isSaving: Boolean, timeText: String)
     Row(
         modifier = GlanceModifier
             .fillMaxSize()
-            .background(GlanceTheme.colors.surface)
-            .cornerRadius(28)
-            .padding(12.dp),
+            .background(BgColor)
+            .cornerRadius(24)
+            .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Column(
-            modifier = GlanceModifier.wrapContentSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            TimerButton(isRunning, isSaving, size = 72.dp)
-            Spacer(GlanceModifier.padding(top = 8.dp))
+        TimerButton(isRunning, isSaving, size = 64.dp)
+        Spacer(GlanceModifier.width(16.dp))
+        Column(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = if (isSaving) "Saved" else timeText,
                 style = TextStyle(
-                    color = GlanceTheme.colors.onSurface,
-                    fontSize = 20.sp,
+                    color = TextColor,
+                    fontSize = 22.sp,
                     fontFamily = FontFamily.Monospace,
                     fontWeight = FontWeight.Medium,
                 ),
             )
-            Spacer(GlanceModifier.padding(top = 4.dp))
+            Spacer(GlanceModifier.padding(top = 2.dp))
             Text(
                 text = if (isRunning) "Running" else if (isSaving) "Saving…" else "Tap to start",
-                style = TextStyle(
-                    color = GlanceTheme.colors.onSurfaceVariant,
-                    fontSize = 12.sp,
-                ),
+                style = TextStyle(color = SubtextColor, fontSize = 11.sp),
             )
         }
     }
 }
 
 @Composable
-private fun TimerButton(
-    isRunning: Boolean,
-    isSaving: Boolean,
-    size: androidx.compose.ui.unit.Dp,
-) {
+private fun TimerButton(isRunning: Boolean, isSaving: Boolean, size: androidx.compose.ui.unit.Dp) {
     val bgColor = when {
-        isSaving -> ColorProvider(TimerSavingGold)
-        isRunning -> ColorProvider(TimerRunningClay)
-        else -> ColorProvider(TimerIdleSage)
+        isSaving -> SaveGold
+        isRunning -> ClayRed
+        else -> SageGreen
     }
-    val action = if (isRunning || isSaving) {
-        actionRunCallback<StopTimerAction>()
-    } else {
-        actionRunCallback<StartTimerAction>()
-    }
-    val iconText = when {
+    val action = if (isRunning || isSaving) actionRunCallback<StopTimerAction>()
+                 else actionRunCallback<StartTimerAction>()
+    val icon = when {
         isSaving -> "✓"
         isRunning -> "■"
         else -> "▶"
@@ -201,9 +185,9 @@ private fun TimerButton(
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            text = iconText,
+            text = icon,
             style = TextStyle(
-                color = ColorProvider(Color.White),
+                color = White,
                 fontSize = (size.value * 0.36f).sp,
                 fontWeight = FontWeight.Bold,
             ),
