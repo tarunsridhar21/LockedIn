@@ -102,7 +102,6 @@ class TimerService : Service() {
                 remove(TimerStateStore.KEY_LAST_SAVED_AT_MS)
             }
             TimerGlanceWidget().updateAll(this@TimerService)
-            WidgetUpdateWorker.schedule(this@TimerService)
         }
         startNotificationTick()
     }
@@ -125,7 +124,6 @@ class TimerService : Service() {
 
             timerStateStore.setIdleAfterSave(endMs)
             TimerStateBus.emit(TimerState.Idle)
-            WidgetUpdateWorker.cancel(this@TimerService)
             WidgetUpdateWorker.scheduleOnce(this@TimerService)
             TimerGlanceWidget().updateAll(this@TimerService)
 
@@ -154,7 +152,6 @@ class TimerService : Service() {
                         remove(TimerStateStore.KEY_LAST_SAVED_AT_MS)
                     }
                     TimerGlanceWidget().updateAll(this@TimerService)
-                    WidgetUpdateWorker.schedule(this@TimerService)
                     startNotificationTick()
                 }
             } else {
@@ -188,12 +185,21 @@ class TimerService : Service() {
     private fun startNotificationTick() {
         notificationTickJob?.cancel()
         notificationTickJob = scope.launch {
+            var tick = 0
             while (true) {
                 val startMs = timerStateStore.startTimeMs.first() ?: break
                 val elapsed = System.currentTimeMillis() - startMs
                 val mm = elapsed / 60_000
                 val ss = (elapsed % 60_000) / 1_000
                 updateNotification("%02d:%02d".format(mm, ss))
+                tick++
+                if (tick % 30 == 0) {
+                    pushWidgetState {
+                        this[TimerStateStore.KEY_RUNNING] = true
+                        this[TimerStateStore.KEY_START_TIME_MS] = startMs
+                    }
+                    TimerGlanceWidget().updateAll(this@TimerService)
+                }
                 delay(1_000)
             }
         }

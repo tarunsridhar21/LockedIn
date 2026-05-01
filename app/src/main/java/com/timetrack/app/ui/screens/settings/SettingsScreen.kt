@@ -42,7 +42,6 @@ import androidx.compose.material.icons.filled.FileDownload
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Widgets
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -90,7 +89,6 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
     val categories by viewModel.categories.collectAsStateWithLifecycle()
-    val widgetCategoryId by viewModel.widgetCategoryId.collectAsStateWithLifecycle()
     val context = LocalContext.current
     var showAddDialog by remember { mutableStateOf(false) }
     var categoryToDelete by remember { mutableStateOf<Category?>(null) }
@@ -116,7 +114,6 @@ fun SettingsScreen(
     }
 
     var categoriesExpanded by remember { mutableStateOf(true) }
-    var widgetSectionExpanded by remember { mutableStateOf(true) }
 
     Scaffold(
         topBar = {
@@ -165,43 +162,6 @@ fun SettingsScreen(
                     }
                 },
             )
-
-            // Widget section
-            CollapsibleSectionHeader(
-                title = stringResource(R.string.settings_widget),
-                expanded = widgetSectionExpanded,
-                onToggle = { widgetSectionExpanded = !widgetSectionExpanded },
-                icon = { Icon(Icons.Default.Widgets, contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
-            )
-            AnimatedVisibility(
-                visible = widgetSectionExpanded,
-                enter = expandVertically(),
-                exit = shrinkVertically(),
-            ) {
-                Column {
-                    Text(
-                        text = stringResource(R.string.settings_widget_category_hint),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-                    )
-                    // "None" option
-                    WidgetCategoryRow(
-                        name = stringResource(R.string.settings_widget_no_category),
-                        colorHex = null,
-                        selected = widgetCategoryId == null,
-                        onClick = { viewModel.setWidgetCategory(null) },
-                    )
-                    categories.forEach { cat ->
-                        WidgetCategoryRow(
-                            name = cat.name,
-                            colorHex = cat.colorHex,
-                            selected = widgetCategoryId == cat.id,
-                            onClick = { viewModel.setWidgetCategory(cat.id) },
-                        )
-                    }
-                }
-            }
 
             // Categories section
             CollapsibleSectionHeader(
@@ -329,51 +289,6 @@ private fun SectionHeader(title: String) {
         style = MaterialTheme.typography.labelLarge,
         color = MaterialTheme.colorScheme.primary,
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-    )
-}
-
-@Composable
-private fun WidgetCategoryRow(
-    name: String,
-    colorHex: String?,
-    selected: Boolean,
-    onClick: () -> Unit,
-) {
-    val dotColor = colorHex?.let {
-        try { Color(android.graphics.Color.parseColor(it)) }
-        catch (_: Exception) { null }
-    }
-
-    ListItem(
-        headlineContent = { Text(name) },
-        leadingContent = {
-            if (dotColor != null) {
-                Box(
-                    modifier = Modifier
-                        .size(20.dp)
-                        .clip(CircleShape)
-                        .background(dotColor),
-                )
-            } else {
-                Box(modifier = Modifier.size(20.dp))
-            }
-        },
-        trailingContent = {
-            if (selected) {
-                Icon(
-                    Icons.Default.Check,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                )
-            }
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .then(
-                if (selected) Modifier.background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f))
-                else Modifier
-            ),
     )
 }
 
